@@ -19,7 +19,7 @@ player_ship = player.Player(x=400, y=300, batch=main_batch)
 player_lives = load.player_lives(3, batch=main_batch)
 
 # Make three asteroids so we have something to shoot at 
-asteroids = load.asteroids(3, player_ship.position, batch=main_batch)
+asteroids = load.asteroids(6, player_ship.position, batch=main_batch)
 
 # Store all objects that update each frame in a list
 game_objects = [player_ship] + asteroids
