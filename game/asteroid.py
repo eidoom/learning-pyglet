@@ -9,8 +9,8 @@ class Asteroid(physicalobject.PhysicalObject):
 
         self.rotate_speed = random.random() * 100.0 - 50.0
 
-    def update(self, dt):
-        super().update(dt)
+    def velocity_update(self, dt):
+        super().velocity_update(dt)
         self.rotation += self.rotate_speed * dt
 
     def handle_collision_with(self, other_object):
