@@ -72,4 +72,3 @@ class PhysicalObject(pyglet.sprite.Sprite):
             self.dead = False
         else:
             self.dead = True
-

@@ -78,4 +78,3 @@ class Player(physicalobject.PhysicalObject):
 
         # Add it to the list of objects to be added to the game_objects list
         self.new_objects.append(new_bullet)
-

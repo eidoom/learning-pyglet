@@ -1,5 +1,5 @@
 import random
-import pyglet
+
 from . import resources, physicalobject
 
 
@@ -10,7 +10,7 @@ class Asteroid(physicalobject.PhysicalObject):
         self.rotate_speed = random.random() * 100.0 - 50.0
 
     def update(self, dt):
-        super(Asteroid, self).update(dt)
+        super().update(dt)
         self.rotation += self.rotate_speed * dt
 
     def handle_collision_with(self, other_object):
