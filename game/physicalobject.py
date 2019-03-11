@@ -15,6 +15,16 @@ class PhysicalObject(pyglet.sprite.Sprite):
         # In addition to position, we have velocity
         self.velocity_x, self.velocity_y = 0.0, 0.0
 
+        # List of new objects to go in the game_objects list
+        self.new_objects = []
+
+        # Tell the game handler about any event handlers
+        # Only applies to things with keyboard/mouse input
+        self.event_handlers = []
+
+        self.reacts_to_bullets = True
+        self.is_bullet = False
+
     def velocity_update(self, dt):
         """This method should be called every frame."""
 
@@ -43,6 +53,11 @@ class PhysicalObject(pyglet.sprite.Sprite):
     def collides_with(self, other_object):
         """Determine if this object collides with another"""
 
+        if not self.reacts_to_bullets and other_object.is_bullet:
+            return False
+        if self.is_bullet and not other_object.reacts_to_bullets:
+            return False
+
         # Calculate distance between object centers that would be a collision,
         # assuming square resources
         collision_distance = self.image.width / 2 + other_object.image.width / 2
@@ -53,4 +68,8 @@ class PhysicalObject(pyglet.sprite.Sprite):
         return actual_distance <= collision_distance
 
     def handle_collision_with(self, other_object):
-        self.dead = True
+        if other_object.__class__ == self.__class__:
+            self.dead = False
+        else:
+            self.dead = True
+

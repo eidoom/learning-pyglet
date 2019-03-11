@@ -1,7 +1,7 @@
 import pyglet
 import random
 
-from . import physicalobject, resources, parameters, util
+from . import physicalobject, resources, parameters, util, asteroid
 
 
 def player_lives(num_icons, batch=None):
@@ -30,8 +30,7 @@ def asteroids(num_asteroids, player_position, batch=None):
         while util.distance((asteroid_x, asteroid_y), player_position) < player_block_radius:
             asteroid_x = random.randint(0, parameters.width)
             asteroid_y = random.randint(0, parameters.width)
-        new_asteroid = physicalobject.PhysicalObject(
-            img=resources.asteroid_image, x=asteroid_x, y=asteroid_y, batch=batch)
+        new_asteroid = asteroid.Asteroid(x=asteroid_x, y=asteroid_y, batch=batch)
         new_asteroid.rotation = random.randint(0, 360)
         new_asteroid.velocity_x, new_asteroid.velocity_y = \
             random.random() * asteroid_max_velocity, random.random() * asteroid_max_velocity

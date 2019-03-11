@@ -20,12 +20,13 @@ player_ship = player.Player(x=parameters.half_width, y=parameters.half_height, b
 player_lives = load.player_lives(3, batch=main_batch)
 
 # Make three asteroids so we have something to shoot at 
-asteroids = load.asteroids(6, player_ship.position, batch=main_batch)
+asteroids = load.asteroids(3, player_ship.position, batch=main_batch)
 
 # Store all objects that update each frame in a list
 game_objects = [player_ship] + asteroids
 
 # Tell the main window that the player object responds to events
+game_window.push_handlers(player_ship)
 game_window.push_handlers(player_ship.key_handler)
 
 
@@ -36,9 +37,6 @@ def on_draw():
 
 
 def update(dt):
-    for obj in game_objects:
-        obj.velocity_update(dt)
-
     # To avoid handling collisions twice, we employ nested loops of ranges.
     # This method also avoids the problem of colliding an object with itself.
     for i in range(len(game_objects)):
@@ -52,6 +50,14 @@ def update(dt):
                     obj_1.handle_collision_with(obj_2)
                     obj_2.handle_collision_with(obj_1)
 
+    # Let's not modify the list while traversing it
+    to_add = []
+
+    for obj in game_objects:
+        obj.velocity_update(dt)
+        to_add.extend(obj.new_objects)
+        obj.new_objects = []
+
     # Get rid of dead objects
     for to_remove in [obj for obj in game_objects if obj.dead]:
         # Remove the object from any batches it is a member of
@@ -59,6 +65,9 @@ def update(dt):
 
         # Remove the object from our list
         game_objects.remove(to_remove)
+
+    # Add new objects to the list
+    game_objects.extend(to_add)
 
 
 if __name__ == "__main__":
