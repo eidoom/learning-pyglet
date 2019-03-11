@@ -19,7 +19,7 @@ def player_lives(num_icons, batch=None):
     height = image.height * scale
     for i in range(num_icons):
         new_sprite = pyglet.sprite.Sprite(
-            img=image, x=int(parameters.width - (i + 0.5) * width), y=int(parameters.width - height / 2), batch=batch)
+            img=image, x=int(parameters.width - (i + 0.5) * width), y=int(parameters.height - height / 2), batch=batch)
         new_sprite.scale = scale
         new_sprite.rotation = 270
         player_lives_list.append(new_sprite)

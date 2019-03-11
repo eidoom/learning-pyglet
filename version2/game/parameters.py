@@ -1,5 +1,5 @@
-width = 800
-height = 600
+width = 1200
+height = 900
 margin = 10
 text_height = 15
 border = margin + text_height
