@@ -22,5 +22,5 @@ asteroid_image = pyglet.resource.image("asteroid.png")
 center_image(asteroid_image)
 
 engine_image = pyglet.resource.image("engine_flame.png")
-engine_image.anchor_x = engine_image.width * 1.1
+engine_image.anchor_x = player_image.width / 2 + engine_image.width
 engine_image.anchor_y = engine_image.height / 2

@@ -44,6 +44,7 @@ class Player(physicalobject.PhysicalObject):
             acceleration_y = force_y / self.mass
             self.velocity_x += acceleration_x
             self.velocity_y += acceleration_y
+
             self.engine_sprite.rotation = self.rotation
             self.engine_sprite.x = self.x
             self.engine_sprite.y = self.y
