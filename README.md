@@ -6,3 +6,8 @@ This follows the [in-depth game example](https://pyglet.readthedocs.io/en/latest
 
 * [`python3`](https://www.python.org/)
 * Python package [`pyglet`](https://pyglet.readthedocs.io/en/pyglet-1.3-maintenance/programming_guide/installation.html)
+
+## Running
+
+* Run with `python asteroid.py`
+* Control the spaceship with the keyboard arrow keys. 
