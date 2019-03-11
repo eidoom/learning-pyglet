@@ -1,6 +1,6 @@
 import pyglet
 
-from version2.game import load, player, parameters
+from game import load, player, parameters
 
 # Set up a window
 game_window = pyglet.window.Window(width=parameters.width, height=parameters.height)
@@ -27,6 +27,7 @@ game_objects = [player_ship] + asteroids
 
 # Tell the main window that the player object responds to events
 game_window.push_handlers(player_ship)
+game_window.push_handlers(player_ship.key_handler)
 
 
 @game_window.event
