@@ -1,6 +1,6 @@
 import pyglet
 
-from . import parameters
+from . import parameters, util
 
 
 class PhysicalObject(pyglet.sprite.Sprite):
@@ -8,6 +8,9 @@ class PhysicalObject(pyglet.sprite.Sprite):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        # Flag to remove this object from the game_object list
+        self.dead = False
 
         # In addition to position, we have velocity
         self.velocity_x, self.velocity_y = 0.0, 0.0
@@ -36,3 +39,18 @@ class PhysicalObject(pyglet.sprite.Sprite):
             self.y = max_y
         elif self.y > max_y:
             self.y = min_y
+
+    def collides_with(self, other_object):
+        """Determine if this object collides with another"""
+
+        # Calculate distance between object centers that would be a collision,
+        # assuming square resources
+        collision_distance = self.image.width / 2 + other_object.image.width / 2
+
+        # Get distance using position tuples
+        actual_distance = util.distance(self.position, other_object.position)
+
+        return actual_distance <= collision_distance
+
+    def handle_collision_with(self, other_object):
+        self.dead = True

@@ -2,7 +2,6 @@ import math
 
 import pyglet
 
-from pyglet.window import key
 from . import physicalobject, resources
 
 
@@ -18,7 +17,7 @@ class Player(physicalobject.PhysicalObject):
         self.mass = 1.0
 
         # Let pyglet handle keyboard events for us
-        self.key_handler = key.KeyStateHandler()
+        self.key_handler = pyglet.window.key.KeyStateHandler()
 
         # Create a child sprite to show when the ship is thrusting
         self.engine_sprite = pyglet.sprite.Sprite(img=resources.engine_image, *args, **kwargs)
@@ -28,12 +27,12 @@ class Player(physicalobject.PhysicalObject):
         # Do all the normal physics stuff
         super().velocity_update(dt)
 
-        if self.key_handler[key.LEFT]:
+        if self.key_handler[pyglet.window.key.LEFT]:
             self.rotation -= self.rotate_speed * dt
-        if self.key_handler[key.RIGHT]:
+        if self.key_handler[pyglet.window.key.RIGHT]:
             self.rotation += self.rotate_speed * dt
 
-        if self.key_handler[key.UP]:
+        if self.key_handler[pyglet.window.key.UP]:
             angle_radians = -math.radians(self.rotation)
             force = self.thrust * dt
             force_x = math.cos(angle_radians) * force
@@ -48,3 +47,7 @@ class Player(physicalobject.PhysicalObject):
             self.engine_sprite.visible = True
         else:
             self.engine_sprite.visible = False
+
+    def delete(self):
+        self.engine_sprite.delete()
+        super().delete()

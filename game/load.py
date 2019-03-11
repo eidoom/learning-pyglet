@@ -1,13 +1,7 @@
-import math
 import pyglet
 import random
 
-from . import physicalobject, resources, parameters
-
-
-def distance(point_1=(0, 0), point_2=(0, 0)):
-    """Returns the distance between two points"""
-    return math.sqrt((point_1[0] - point_2[0]) ** 2 + (point_1[1] - point_2[1]) ** 2)
+from . import physicalobject, resources, parameters, util
 
 
 def player_lives(num_icons, batch=None):
@@ -33,7 +27,7 @@ def asteroids(num_asteroids, player_position, batch=None):
     asteroids_list = []
     for i in range(num_asteroids):
         asteroid_x, asteroid_y = player_position
-        while distance((asteroid_x, asteroid_y), player_position) < player_block_radius:
+        while util.distance((asteroid_x, asteroid_y), player_position) < player_block_radius:
             asteroid_x = random.randint(0, parameters.width)
             asteroid_y = random.randint(0, parameters.width)
         new_asteroid = physicalobject.PhysicalObject(
