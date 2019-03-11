@@ -12,6 +12,7 @@ class Player(physicalobject.PhysicalObject):
         # Set some easy-to-tweak constants
         self.thrust = 300.0
         self.rotate_speed = 200.0
+        self.mass = 1.0
 
         self.keys = dict(left=False, right=False, up=False)
 
@@ -33,7 +34,7 @@ class Player(physicalobject.PhysicalObject):
 
     def velocity_update(self, dt):
         # Do all the normal physics stuff
-        super(Player, self).velocity_update(dt)
+        super().velocity_update(dt)
 
         if self.keys['left']:
             self.rotation -= self.rotate_speed * dt
@@ -42,7 +43,10 @@ class Player(physicalobject.PhysicalObject):
 
         if self.keys['up']:
             angle_radians = -math.radians(self.rotation)
-            force_x = math.cos(angle_radians) * self.thrust * dt
-            force_y = math.sin(angle_radians) * self.thrust * dt
-            self.velocity_x += force_x
-            self.velocity_y += force_y
+            force = self.thrust * dt
+            force_x = math.cos(angle_radians) * force
+            force_y = math.sin(angle_radians) * force
+            acceleration_x = force_x / self.mass
+            acceleration_y = force_y / self.mass
+            self.velocity_x += acceleration_x
+            self.velocity_y += acceleration_y
