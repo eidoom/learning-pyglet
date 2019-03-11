@@ -1,19 +1,20 @@
 import pyglet
 
-from version2.game import load, player
+from version2.game import load, player, parameters
 
 # Set up a window
-game_window = pyglet.window.Window(width=800, height=600)
+game_window = pyglet.window.Window(width=parameters.width, height=parameters.height)
 
 main_batch = pyglet.graphics.Batch()
 
 # Set up the two top labels
-score_label = pyglet.text.Label(text="Score: 0", x=10, y=575, batch=main_batch)
-level_label = pyglet.text.Label(text="Version 2: Basic Motion",
-                                x=400, y=575, anchor_x='center', batch=main_batch)
+score_label = pyglet.text.Label(text="Score: 0", x=parameters.margin, y=parameters.reduced_height, batch=main_batch)
+level_label = pyglet.text.Label(
+    text="Version 2: Basic Motion", x=parameters.half_width, y=parameters.reduced_height, anchor_x='center',
+    batch=main_batch)
 
 # Initialize the player sprite
-player_ship = player.Player(x=400, y=300, batch=main_batch)
+player_ship = player.Player(x=parameters.half_width, y=parameters.half_height, batch=main_batch)
 
 # Make three sprites to represent remaining lives
 player_lives = load.player_lives(3, batch=main_batch)

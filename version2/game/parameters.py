@@ -1,0 +1,9 @@
+width = 800
+height = 600
+margin = 10
+text_height = 15
+border = margin + text_height
+reduced_width = width - border
+reduced_height = height - border
+half_width = width // 2
+half_height = height // 2
