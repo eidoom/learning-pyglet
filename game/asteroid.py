@@ -7,7 +7,7 @@ class Asteroid(physicalobject.PhysicalObject):
     def __init__(self, *args, **kwargs):
         super().__init__(img=resources.asteroid_image, *args, **kwargs)
 
-        self.rotate_speed = random.random() * 100.0 - 50.0
+        self.rotate_speed = random.random() * 50.0
 
     def velocity_update(self, dt):
         super().velocity_update(dt)
