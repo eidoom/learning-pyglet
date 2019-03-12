@@ -7,11 +7,15 @@ game_window = pyglet.window.Window(width=parameters.width, height=parameters.hei
 
 main_batch = pyglet.graphics.Batch()
 
+score = 0
+level = 1
+game_over = False
+
 # Set up the two top labels
-score_label = pyglet.text.Label(text="Score: 0", x=parameters.margin, y=parameters.reduced_height, batch=main_batch)
+score_label = pyglet.text.Label(
+    text=f"Score: {score}", x=parameters.margin, y=parameters.reduced_height, batch=main_batch)
 level_label = pyglet.text.Label(
-    text="Asteroids clone", x=parameters.half_width, y=parameters.reduced_height, anchor_x='center',
-    batch=main_batch)
+    text=f"Level: {level}", x=parameters.half_width, y=parameters.reduced_height, anchor_x='center', batch=main_batch)
 
 # We need to pop off as many event stack frames as we pushed on
 # every time we reset the level.
@@ -19,17 +23,14 @@ event_stack_size = 0
 
 
 def init():
-    global score, num_asteroids
-
-    score = 0
-    score_label.text = f"Score: {score}"
+    global num_asteroids
 
     num_asteroids = parameters.init_num_asteroids
     reset_level()
 
 
 def reset_level(num_lives=parameters.num_lives):
-    global player_ship, player_lives, game_objects, event_stack_size
+    global player_ship, player_lives, game_objects, event_stack_size, level
 
     # Clear the event stack of any remaining handlers from other levels
     while event_stack_size > 0:
@@ -54,6 +55,8 @@ def reset_level(num_lives=parameters.num_lives):
             game_window.push_handlers(handler)
             event_stack_size += 1
 
+    level_label.text = f"Level: {level}"
+
 
 @game_window.event
 def on_draw():
@@ -62,7 +65,7 @@ def on_draw():
 
 
 def update(dt):
-    global score, num_asteroids
+    global score, num_asteroids, level, game_over
 
     player_dead = False
     victory = False
@@ -125,8 +128,13 @@ def update(dt):
         if len(player_lives) > 0:
             reset_level(len(player_lives) - 1)
         else:
-            pyglet.text.Label(text="GAME OVER", x=parameters.half_width, y=parameters.half_height, anchor_x='center',
-                              batch=main_batch, font_size=48)
+            if not game_over:
+                pyglet.text.Label(text="GAME OVER", x=parameters.half_width, y=parameters.half_height, anchor_x='center',
+                                  batch=main_batch, font_size=48)
+                pyglet.text.Label(text=f"Score: {score}", x=parameters.half_width, y=parameters.half_height-48,
+                                  anchor_x='center', batch=main_batch, font_size=24)
+                game_over = True
+            reset_level(0)
     elif victory:
         num_asteroids += 1
         try:
@@ -134,6 +142,7 @@ def update(dt):
         except AttributeError:
             pass
         score += 10
+        level += 1
         reset_level(len(player_lives))
 
 

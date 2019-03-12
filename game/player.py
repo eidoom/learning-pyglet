@@ -30,11 +30,17 @@ class Player(physicalobject.PhysicalObject):
         # Player should not collide with own bullets
         self.reacts_to_bullets = False
 
+        self.rotation = 270
+
     def velocity_update(self, dt):
         # Do all the normal physics stuff
         super().velocity_update(dt)
 
-        controls_raw = {"forward": "W", "rotate_left": "A", "rotate_right": "D"}
+        controls_raw = {
+            "forward": "W",
+            "rotate_left": "A",
+            "rotate_right": "D",
+        }
         control = {key: getattr(pyglet.window.key, controls_raw[key]) for key in controls_raw.keys()}
 
         if self.key_handler[control["rotate_left"]]:
