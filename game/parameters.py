@@ -7,3 +7,6 @@ reduced_width = width - border
 reduced_height = height - border
 half_width = width // 2
 half_height = height // 2
+num_lives = 0
+init_num_asteroids = 1
+min_asteroid_fraction = 1

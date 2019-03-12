@@ -20,10 +20,14 @@ class Player(physicalobject.PhysicalObject):
         # Let pyglet handle keyboard events for us
         self.key_handler = pyglet.window.key.KeyStateHandler()
 
+        # Tell the game handler about any event handlers
+        self.event_handlers = [self, self.key_handler]
+
         # Create a child sprite to show when the ship is thrusting
         self.engine_sprite = pyglet.sprite.Sprite(img=resources.engine_image, *args, **kwargs)
         self.engine_sprite.visible = False
 
+        # Player should not collide with own bullets
         self.reacts_to_bullets = False
 
     def velocity_update(self, dt):
@@ -36,6 +40,7 @@ class Player(physicalobject.PhysicalObject):
             self.rotation += self.rotate_speed * dt
 
         if self.key_handler[pyglet.window.key.UP]:
+            # Note: pyglet's rotation attributes are in "negative degrees"
             angle_radians = -math.radians(self.rotation)
             force = self.thrust * dt
             force_x = math.cos(angle_radians) * force
@@ -45,11 +50,13 @@ class Player(physicalobject.PhysicalObject):
             self.velocity_x += acceleration_x
             self.velocity_y += acceleration_y
 
+            # If thrusting, update the engine sprite
             self.engine_sprite.rotation = self.rotation
             self.engine_sprite.x = self.x
             self.engine_sprite.y = self.y
             self.engine_sprite.visible = True
         else:
+            # Otherwise, hide it
             self.engine_sprite.visible = False
 
     def delete(self):
@@ -68,6 +75,7 @@ class Player(physicalobject.PhysicalObject):
 
         # Create a new bullet just in front of the player
         ship_radius = self.image.width / 2
+
         bullet_x = self.x + math.cos(angle_radians) * ship_radius
         bullet_y = self.y + math.sin(angle_radians) * ship_radius
         new_bullet = bullet.Bullet(bullet_x, bullet_y, batch=self.batch)

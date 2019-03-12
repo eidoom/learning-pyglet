@@ -22,6 +22,7 @@ class PhysicalObject(pyglet.sprite.Sprite):
         # Only applies to things with keyboard/mouse input
         self.event_handlers = []
 
+        # Flags to toggle collision with bullets
         self.reacts_to_bullets = True
         self.is_bullet = False
 
@@ -53,6 +54,7 @@ class PhysicalObject(pyglet.sprite.Sprite):
     def collides_with(self, other_object):
         """Determine if this object collides with another"""
 
+        # Ignore bullet collisions if we're supposed to
         if not self.reacts_to_bullets and other_object.is_bullet:
             return False
         if self.is_bullet and not other_object.reacts_to_bullets:
@@ -68,7 +70,5 @@ class PhysicalObject(pyglet.sprite.Sprite):
         return actual_distance <= collision_distance
 
     def handle_collision_with(self, other_object):
-        if other_object.__class__ == self.__class__:
-            self.dead = False
-        else:
+        if other_object.__class__ is not self.__class__:
             self.dead = True

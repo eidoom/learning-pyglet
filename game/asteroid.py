@@ -1,9 +1,11 @@
 import random
 
-from . import resources, physicalobject
+from . import resources, physicalobject, parameters
 
 
 class Asteroid(physicalobject.PhysicalObject):
+    """An asteroid that divides a little before it dies"""
+
     def __init__(self, *args, **kwargs):
         super().__init__(img=resources.asteroid_image, *args, **kwargs)
 
@@ -16,7 +18,7 @@ class Asteroid(physicalobject.PhysicalObject):
     def handle_collision_with(self, other_object):
         super().handle_collision_with(other_object)
 
-        if self.dead and self.scale > 0.25:
+        if self.dead and self.scale > parameters.min_asteroid_fraction:
             num_asteroids = random.randint(2, 3)
             for i in range(num_asteroids):
                 new_asteroid = Asteroid(x=self.x, y=self.y, batch=self.batch)
