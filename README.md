@@ -10,4 +10,4 @@ This follows the [in-depth game example](https://pyglet.readthedocs.io/en/latest
 ## Running
 
 * Run with `python3 asteroid.py`
-* Control the spaceship with the keyboard arrow keys and shoot with the spacebar. 
+* Control the spaceship with the keyboard WASD keys (although you can only thrust in the forward direction, so that S is redundant) and shoot with the spacebar. 

@@ -34,12 +34,15 @@ class Player(physicalobject.PhysicalObject):
         # Do all the normal physics stuff
         super().velocity_update(dt)
 
-        if self.key_handler[pyglet.window.key.LEFT]:
+        controls_raw = {"forward": "W", "rotate_left": "A", "rotate_right": "D"}
+        control = {key: getattr(pyglet.window.key, controls_raw[key]) for key in controls_raw.keys()}
+
+        if self.key_handler[control["rotate_left"]]:
             self.rotation -= self.rotate_speed * dt
-        if self.key_handler[pyglet.window.key.RIGHT]:
+        if self.key_handler[control["rotate_right"]]:
             self.rotation += self.rotate_speed * dt
 
-        if self.key_handler[pyglet.window.key.UP]:
+        if self.key_handler[control["forward"]]:
             # Note: pyglet's rotation attributes are in "negative degrees"
             angle_radians = -math.radians(self.rotation)
             force = self.thrust * dt
