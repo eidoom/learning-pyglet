@@ -10,6 +10,7 @@ main_batch = pyglet.graphics.Batch()
 score = 0
 level = 1
 game_over = False
+num_asteroids = parameters.init_num_asteroids
 
 # Set up the two top labels
 score_label = pyglet.text.Label(
@@ -22,15 +23,8 @@ level_label = pyglet.text.Label(
 event_stack_size = 0
 
 
-def init():
-    global num_asteroids
-
-    num_asteroids = parameters.init_num_asteroids
-    reset_level()
-
-
 def reset_level(num_lives=parameters.num_lives):
-    global player_ship, player_lives, game_objects, event_stack_size, level
+    global player_ship, player_lives, game_objects, event_stack_size, level, num_asteroids
 
     # Clear the event stack of any remaining handlers from other levels
     while event_stack_size > 0:
@@ -65,7 +59,7 @@ def on_draw():
 
 
 def update(dt):
-    global score, num_asteroids, level, game_over
+    global score, level, game_over, num_asteroids
 
     player_dead = False
     victory = False
@@ -129,26 +123,27 @@ def update(dt):
             reset_level(len(player_lives) - 1)
         else:
             if not game_over:
-                pyglet.text.Label(text="GAME OVER", x=parameters.half_width, y=parameters.half_height, anchor_x='center',
+                pyglet.text.Label(text="GAME OVER", x=parameters.half_width, y=parameters.half_height,
+                                  anchor_x='center',
                                   batch=main_batch, font_size=48)
-                pyglet.text.Label(text=f"Score: {score}", x=parameters.half_width, y=parameters.half_height-48,
+                pyglet.text.Label(text=f"Score: {score}", x=parameters.half_width, y=parameters.half_height - 48,
                                   anchor_x='center', batch=main_batch, font_size=24)
                 game_over = True
             reset_level(0)
     elif victory:
-        num_asteroids += 1
         try:
             player_ship.delete()
         except AttributeError:
             pass
         score += 10
         level += 1
-        reset_level(len(player_lives))
+        num_asteroids += parameters.new_asteroids_on_reset
+        reset_level(num_lives=len(player_lives))
 
 
 if __name__ == "__main__":
     # Start it up!
-    init()
+    reset_level()
 
     # Update the game 120 times per second
     pyglet.clock.schedule_interval(update, 1 / 120.0)

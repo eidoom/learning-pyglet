@@ -42,6 +42,10 @@ class PhysicalObject(pyglet.sprite.Sprite):
         min_y = -self.image.height / 2
         max_x = parameters.width + self.image.width / 2
         max_y = parameters.height + self.image.height / 2
+        # min_x = 0
+        # min_y = 0
+        # max_x = parameters.width
+        # max_y = parameters.height
         if self.x < min_x:
             self.x = max_x
         elif self.x > max_x:

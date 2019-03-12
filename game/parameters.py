@@ -10,3 +10,4 @@ half_height = height // 2
 num_lives = 3
 init_num_asteroids = 1
 min_asteroid_fraction = 0.25
+new_asteroids_on_reset = 1
