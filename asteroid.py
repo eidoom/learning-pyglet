@@ -145,7 +145,7 @@ def update(dt):
             pass
         score += 10
         level += 1
-        num_asteroids += parameters.new_asteroids_on_reset
+        num_asteroids += parameters.num_new_asteroids_on_reset
         reset_level(num_lives=len(player_lives))
 
 

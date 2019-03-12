@@ -33,8 +33,23 @@ class PhysicalObject(pyglet.sprite.Sprite):
         self.x += self.velocity_x * dt
         self.y += self.velocity_y * dt
 
-        # Wrap around the screen if necessary
-        self.check_bounds()
+        if parameters.classic:
+            # Wrap around the screen if necessary
+            self.check_bounds()
+        else:
+            # Bouncy borders
+            self.check_bounds_for_bounce()
+
+    def check_bounds_for_bounce(self):
+        radius = (self.width + self.height)/4
+        min_x = radius
+        min_y = radius
+        max_x = parameters.width - radius
+        max_y = parameters.height - radius
+        if self.x < min_x or self.x > max_x:
+            self.velocity_x = - self.velocity_x
+        if self.y < min_y or self.y > max_y:
+            self.velocity_y = - self.velocity_y
 
     def check_bounds(self):
         """Use the classic Asteroids screen wrapping behavior"""
@@ -42,10 +57,6 @@ class PhysicalObject(pyglet.sprite.Sprite):
         min_y = -self.image.height / 2
         max_x = parameters.width + self.image.width / 2
         max_y = parameters.height + self.image.height / 2
-        # min_x = 0
-        # min_y = 0
-        # max_x = parameters.width
-        # max_y = parameters.height
         if self.x < min_x:
             self.x = max_x
         elif self.x > max_x:
