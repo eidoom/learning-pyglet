@@ -9,5 +9,5 @@ This follows the [in-depth game example](https://pyglet.readthedocs.io/en/latest
 
 ## Running
 
-* Run with `python asteroid.py`
+* Run with `python3 asteroid.py`
 * Control the spaceship with the keyboard arrow keys and shoot with the spacebar. 
