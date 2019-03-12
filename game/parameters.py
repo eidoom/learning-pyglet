@@ -1,8 +1,8 @@
 width = 1200
 height = 900
 margin = 10
-text_height = 15
-border = margin + text_height
+std_text_size = 12
+border = margin + std_text_size
 reduced_width = width - border
 reduced_height = height - border
 half_width = width // 2

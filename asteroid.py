@@ -14,9 +14,13 @@ num_asteroids = parameters.init_num_asteroids
 
 # Set up the two top labels
 score_label = pyglet.text.Label(
-    text=f"Score: {score}", x=parameters.margin, y=parameters.reduced_height, batch=main_batch)
+    text=f"Score: {score}", x=parameters.margin, y=parameters.reduced_height, batch=main_batch,
+    font_size=parameters.std_text_size
+)
 level_label = pyglet.text.Label(
-    text=f"Level: {level}", x=parameters.half_width, y=parameters.reduced_height, anchor_x='center', batch=main_batch)
+    text=f"Level: {level}", x=parameters.half_width, y=parameters.reduced_height, anchor_x='center', batch=main_batch,
+    font_size=parameters.std_text_size
+)
 
 # We need to pop off as many event stack frames as we pushed on
 # every time we reset the level.
@@ -123,11 +127,15 @@ def update(dt):
             reset_level(len(player_lives) - 1)
         else:
             if not game_over:
-                pyglet.text.Label(text="GAME OVER", x=parameters.half_width, y=parameters.half_height,
-                                  anchor_x='center',
-                                  batch=main_batch, font_size=48)
-                pyglet.text.Label(text=f"Score: {score}", x=parameters.half_width, y=parameters.half_height - 48,
-                                  anchor_x='center', batch=main_batch, font_size=24)
+                pyglet.text.Label(
+                    text="GAME OVER", x=parameters.half_width, y=parameters.half_height, anchor_x='center',
+                    batch=main_batch, font_size=4 * parameters.std_text_size
+                )
+                pyglet.text.Label(
+                    text=f"Score: {score}", x=parameters.half_width,
+                    y=parameters.half_height - 4 * parameters.std_text_size, anchor_x='center', batch=main_batch,
+                    font_size=2 * parameters.std_text_size
+                )
                 game_over = True
             reset_level(0)
     elif victory:
