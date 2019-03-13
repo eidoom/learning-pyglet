@@ -31,7 +31,7 @@ def asteroids(num_asteroids, player_position, batch=None):
         asteroid_x, asteroid_y = player_position
         while util.distance((asteroid_x, asteroid_y), player_position) < player_block_radius:
             asteroid_x = random.randint(0, parameters.width)
-            asteroid_y = random.randint(0, parameters.width)
+            asteroid_y = random.randint(0, parameters.height)
         new_asteroid = asteroid.Asteroid(x=asteroid_x, y=asteroid_y, batch=batch)
         new_asteroid.rotation = random.randint(0, 360)
         new_asteroid.velocity_x, new_asteroid.velocity_y = \
