@@ -1,6 +1,8 @@
+from math import cos
+
 import pyglet
 
-from . import parameters, util
+from . import parameters, util, asteroid
 
 
 class PhysicalObject(pyglet.sprite.Sprite):
@@ -26,8 +28,22 @@ class PhysicalObject(pyglet.sprite.Sprite):
         self.reacts_to_bullets = True
         self.is_bullet = False
 
+        self.scattering = False
+
     def velocity_update(self, dt):
         """This method should be called every frame."""
+
+        if self.scattering:
+            if isinstance(self, asteroid.Asteroid):
+                # v1 = (self.velocity_x, self.velocity_y)
+                # v2 = self.scattering
+                # axis = util.add_vectors(v1,v2)
+                # # n = reversed(a)
+                # # an = [c/sqrt(sum([x**2 for x in a])) for c in a]
+                # cos_angle1 = util.angle_between_vectors(v1, axis)
+                self.velocity_x = -self.velocity_x
+                self.velocity_y = -self.velocity_y
+            self.scattering = False
 
         # Update position according to velocity and time
         self.x += self.velocity_x * dt
@@ -41,7 +57,7 @@ class PhysicalObject(pyglet.sprite.Sprite):
             self.check_bounds_for_bounce()
 
     def check_bounds_for_bounce(self):
-        radius = (self.width + self.height)/4
+        radius = (self.width + self.height) / 4
         min_x = radius
         min_y = radius
         max_x = parameters.width - radius
@@ -85,5 +101,8 @@ class PhysicalObject(pyglet.sprite.Sprite):
         return actual_distance <= collision_distance
 
     def handle_collision_with(self, other_object):
-        if other_object.__class__ is not self.__class__:
+        if isinstance(self, asteroid.Asteroid) and isinstance(other_object, asteroid.Asteroid):
+            self.scattering = (other_object.velocity_x, other_object.velocity_y)
+        elif other_object.__class__ is not self.__class__:
+            # Set to False for testing
             self.dead = True
