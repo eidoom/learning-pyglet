@@ -1,5 +1,3 @@
-from math import cos
-
 import pyglet
 
 from . import parameters, util, asteroid
@@ -37,10 +35,10 @@ class PhysicalObject(pyglet.sprite.Sprite):
             if isinstance(self, asteroid.Asteroid):
                 # v1 = (self.velocity_x, self.velocity_y)
                 # v2 = self.scattering
-                # axis = util.add_vectors(v1,v2)
-                # # n = reversed(a)
-                # # an = [c/sqrt(sum([x**2 for x in a])) for c in a]
-                # cos_angle1 = util.angle_between_vectors(v1, axis)
+                # axis = util.add_vectors(v1, v2)
+                # angle = util.angle_between_vectors(v1, axis)
+                # o1 = util.rotate_vector_by_angle(axis, -angle)
+                # self.velocity_x, self.velocity_y = o1
                 self.velocity_x = -self.velocity_x
                 self.velocity_y = -self.velocity_y
             self.scattering = False
