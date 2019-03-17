@@ -6,10 +6,10 @@ from . import parameters, util, asteroid
 class PhysicalObject(pyglet.sprite.Sprite):
     """A sprite with physical properties such as velocity"""
 
-    def __init__(self, mass=1.0, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.mass = mass
+        self.radius = util.average(self.width, self.height) / 2
 
         # Flag to remove this object from the game_object list
         self.dead = False
@@ -53,11 +53,10 @@ class PhysicalObject(pyglet.sprite.Sprite):
             self.check_bounds_for_bounce()
 
     def check_bounds_for_bounce(self):
-        radius = (self.width + self.height) / 4
-        min_x = radius
-        min_y = radius
-        max_x = parameters.width - radius
-        max_y = parameters.height - radius
+        min_x = self.radius
+        min_y = self.radius
+        max_x = parameters.width - self.radius
+        max_y = parameters.height - self.radius
         if self.x < min_x and self.velocity_x < 0:
             self.velocity_x = - self.velocity_x
         if self.x > max_x and self.velocity_x > 0:
@@ -69,10 +68,10 @@ class PhysicalObject(pyglet.sprite.Sprite):
 
     def check_bounds(self):
         """Use the classic Asteroids screen wrapping behavior"""
-        min_x = -self.image.width / 2
-        min_y = -self.image.height / 2
-        max_x = parameters.width + self.image.width / 2
-        max_y = parameters.height + self.image.height / 2
+        min_x = -self.radius
+        min_y = -self.radius
+        max_x = parameters.width + self.radius
+        max_y = parameters.height + self.radius
         if self.x < min_x:
             self.x = max_x
         elif self.x > max_x:
@@ -101,29 +100,30 @@ class PhysicalObject(pyglet.sprite.Sprite):
         return actual_distance <= collision_distance
 
     def handle_collision_with(self, other_object):
-        if isinstance(self, asteroid.Asteroid) and isinstance(other_object, asteroid.Asteroid):
+        # if isinstance(self, asteroid.Asteroid) and \
+        #         any([isinstance(other_object, asteroid.Asteroid), other_object.is_bullet]):
 
-            x1 = (self.x, self.y)
-            x2 = (other_object.x, other_object.y)
-            v1 = (self.velocity_x, self.velocity_y)
-            v2 = (other_object.velocity_x, other_object.velocity_y)
-            m1 = self.mass
-            m2 = other_object.mass
+        x1 = (self.x, self.y)
+        x2 = (other_object.x, other_object.y)
+        v1 = (self.velocity_x, self.velocity_y)
+        v2 = (other_object.velocity_x, other_object.velocity_y)
+        m1 = self.mass
+        m2 = other_object.mass
 
-            normalisation_factor_raw = util.vector_magnitude_squared(util.subtract_vectors(x1, x2))
-            normalisation_factor = normalisation_factor_raw if normalisation_factor_raw > 1 else 1
+        normalisation_factor_raw = util.vector_magnitude_squared(util.subtract_vectors(x1, x2))
+        normalisation_factor = normalisation_factor_raw if normalisation_factor_raw > 1 else 1
 
-            dv1 = util.scalar_multiplication_of_vector(
-                - 2 * m2 / (m1 + m2) * util.scalar_product_of_vectors(
-                    util.subtract_vectors(v1, v2), util.subtract_vectors(x1, x2)) /
-                normalisation_factor,
-                util.subtract_vectors(x1, x2)
-            )
+        dv1 = util.scalar_multiplication_of_vector(
+            - 2 * m2 / (m1 + m2) * util.scalar_product_of_vectors(
+                util.subtract_vectors(v1, v2), util.subtract_vectors(x1, x2)) /
+            normalisation_factor,
+            util.subtract_vectors(x1, x2)
+        )
 
-            new_v1 = util.add_vectors(v1, dv1)
+        new_v1 = util.add_vectors(v1, dv1)
 
-            self.scattering = new_v1
+        self.scattering = new_v1
 
-        elif other_object.__class__ is not self.__class__:
+        if not all(isinstance(x, asteroid.Asteroid) for x in (self, other_object)):
             # Set to False for testing
             self.dead = True

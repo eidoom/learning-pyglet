@@ -12,7 +12,8 @@ class Player(physicalobject.PhysicalObject):
         super().__init__(img=resources.player_image, *args, **kwargs)
 
         # Set some easy-to-tweak constants
-        self.thrust = 300.0
+        self.mass = 10.0
+        self.thrust = 2000.0
         self.rotate_speed = 200.0
         self.bullet_speed = 700.0
 
@@ -26,8 +27,7 @@ class Player(physicalobject.PhysicalObject):
         self.engine_sprite = pyglet.sprite.Sprite(img=resources.engine_image, *args, **kwargs)
         self.engine_sprite.visible = False
 
-        # Player should not collide with own bullets
-        self.reacts_to_bullets = False
+        self.reacts_to_bullets = True
 
         self.rotation = 270
 
@@ -82,10 +82,10 @@ class Player(physicalobject.PhysicalObject):
         angle_radians = -radians(self.rotation)
 
         # Create a new bullet just in front of the player
-        ship_radius = self.image.width / 2
+        initial_separation = self.radius + resources.bullet_image.width / 2 + 20
 
-        bullet_x = self.x + cos(angle_radians) * ship_radius
-        bullet_y = self.y + sin(angle_radians) * ship_radius
+        bullet_x = self.x + cos(angle_radians) * initial_separation
+        bullet_y = self.y + sin(angle_radians) * initial_separation
         new_bullet = bullet.Bullet(x=bullet_x, y=bullet_y, batch=self.batch)
 
         # Give it some speed

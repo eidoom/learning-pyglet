@@ -15,3 +15,5 @@ asteroid_max_velocity = 40
 # Classic motion is wrapping borders, while False gives bouncy borders
 classic = False
 god_mode = True
+# explosive_rounds explode after 0.5 seconds, while False gives kinetic rounds that do not
+explosive_rounds = True

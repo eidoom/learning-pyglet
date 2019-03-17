@@ -9,5 +9,16 @@ This follows the [in-depth game example](https://pyglet.readthedocs.io/en/latest
 
 ## Running
 
-* Run with `python3 asteroid.py`
+* Run with `python3 play.py`
 * Control the spaceship with the keyboard WASD keys (although you can only thrust in the forward direction, so that S is redundant) and shoot with the spacebar. 
+
+## Comments
+
+* Currently working on making linear momentum physical
+* Angular momentum currently unphysical (really spin since I mean rotations of asteroids)
+* Need to calculate how to add random but momentum conserving transverse components when asteroids break apart
+* Explosive rounds need to impart more momentum into child asteroid system
+* Need to generalise code so can have random number of child asteroids created
+* Could add torpedoes, which start with low velocity but accelerate themselves and have more explosive power
+* Want to have player-bullet collisions for kinetic rounds, but not sure how to get around player immediately colliding with them since they're accelerating and bullet is not. Have set the initial separation larger for now, and players will have to know not to accelerate wile shooting.
+* Haven't nailed down the parent asteroid decay yet. Want child products to start closer and move apart

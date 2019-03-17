@@ -57,3 +57,6 @@ def scalar_multiplication_of_vector(scalar, vector):
 
 # def rotate_vector_by_angle(vector, angle):
 #     return matrix_times_vector(rotation_matrix(angle), vector)
+
+def average(*numbers):
+    return sum(numbers) / len(numbers)
