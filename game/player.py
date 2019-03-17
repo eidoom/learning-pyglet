@@ -1,4 +1,4 @@
-import math
+from math import radians, cos, sin
 
 import pyglet
 
@@ -49,10 +49,10 @@ class Player(physicalobject.PhysicalObject):
 
         if self.key_handler[control["forward"]]:
             # Note: pyglet's rotation attributes are in "negative degrees"
-            angle_radians = -math.radians(self.rotation)
+            angle_radians = -radians(self.rotation)
             force = self.thrust * dt
-            force_x = math.cos(angle_radians) * force
-            force_y = math.sin(angle_radians) * force
+            force_x = cos(angle_radians) * force
+            force_y = sin(angle_radians) * force
             acceleration_x = force_x / self.mass
             acceleration_y = force_y / self.mass
             self.velocity_x += acceleration_x
@@ -79,18 +79,18 @@ class Player(physicalobject.PhysicalObject):
 
     def fire(self):
         # Note: pyglet's rotation attributes are in "negative degrees"
-        angle_radians = -math.radians(self.rotation)
+        angle_radians = -radians(self.rotation)
 
         # Create a new bullet just in front of the player
         ship_radius = self.image.width / 2
 
-        bullet_x = self.x + math.cos(angle_radians) * ship_radius
-        bullet_y = self.y + math.sin(angle_radians) * ship_radius
-        new_bullet = bullet.Bullet(bullet_x, bullet_y, batch=self.batch)
+        bullet_x = self.x + cos(angle_radians) * ship_radius
+        bullet_y = self.y + sin(angle_radians) * ship_radius
+        new_bullet = bullet.Bullet(x=bullet_x, y=bullet_y, batch=self.batch)
 
         # Give it some speed
-        bullet_vx = self.velocity_x + math.cos(angle_radians) * self.bullet_speed
-        bullet_vy = self.velocity_y + math.sin(angle_radians) * self.bullet_speed
+        bullet_vx = self.velocity_x + cos(angle_radians) * self.bullet_speed
+        bullet_vy = self.velocity_y + sin(angle_radians) * self.bullet_speed
         new_bullet.velocity_x, new_bullet.velocity_y = bullet_vx, bullet_vy
 
         # Add it to the list of objects to be added to the game_objects list

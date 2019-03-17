@@ -123,4 +123,4 @@ class PhysicalObject(pyglet.sprite.Sprite):
 
         elif other_object.__class__ is not self.__class__:
             # Set to False for testing
-            self.dead = False
+            self.dead = True
