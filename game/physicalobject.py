@@ -110,10 +110,13 @@ class PhysicalObject(pyglet.sprite.Sprite):
             m1 = self.mass
             m2 = other_object.mass
 
+            normalisation_factor_raw = util.vector_magnitude_squared(util.subtract_vectors(x1, x2))
+            normalisation_factor = normalisation_factor_raw if normalisation_factor_raw > 1 else 1
+
             dv1 = util.scalar_multiplication_of_vector(
                 - 2 * m2 / (m1 + m2) * util.scalar_product_of_vectors(
                     util.subtract_vectors(v1, v2), util.subtract_vectors(x1, x2)) /
-                util.vector_magnitude_squared(util.subtract_vectors(x1, x2)),
+                normalisation_factor,
                 util.subtract_vectors(x1, x2)
             )
 
