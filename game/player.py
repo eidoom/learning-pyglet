@@ -14,7 +14,6 @@ class Player(physicalobject.PhysicalObject):
         # Set some easy-to-tweak constants
         self.thrust = 300.0
         self.rotate_speed = 200.0
-        self.mass = 1.0
         self.bullet_speed = 700.0
 
         # Let pyglet handle keyboard events for us

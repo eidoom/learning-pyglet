@@ -8,10 +8,10 @@ reduced_height = height - border
 half_width = width // 2
 half_height = height // 2
 num_lives = 3
-init_num_asteroids = 1 * 10
+init_num_asteroids = 1 * 20
 min_asteroid_fraction = 0.25
 num_new_asteroids_on_reset = 1
-asteroid_max_velocity = 40 * 2
+asteroid_max_velocity = 40 * 3
 # Classic motion is wrapping borders, while False gives bouncy borders
 classic = False
 god_mode = True

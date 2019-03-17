@@ -6,8 +6,10 @@ from . import parameters, util, asteroid
 class PhysicalObject(pyglet.sprite.Sprite):
     """A sprite with physical properties such as velocity"""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, mass=1.0, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.mass = mass
 
         # Flag to remove this object from the game_object list
         self.dead = False
@@ -33,14 +35,10 @@ class PhysicalObject(pyglet.sprite.Sprite):
 
         if self.scattering:
             if isinstance(self, asteroid.Asteroid):
-                # v1 = (self.velocity_x, self.velocity_y)
-                # v2 = self.scattering
-                # axis = util.add_vectors(v1, v2)
-                # angle = util.angle_between_vectors(v1, axis)
-                # o1 = util.rotate_vector_by_angle(axis, -angle)
-                # self.velocity_x, self.velocity_y = o1
-                self.velocity_x = -self.velocity_x
-                self.velocity_y = -self.velocity_y
+                self.velocity_x, self.velocity_y = self.scattering
+
+                # self.velocity_x = -self.velocity_x
+                # self.velocity_y = -self.velocity_y
             self.scattering = False
 
         # Update position according to velocity and time
@@ -60,9 +58,13 @@ class PhysicalObject(pyglet.sprite.Sprite):
         min_y = radius
         max_x = parameters.width - radius
         max_y = parameters.height - radius
-        if self.x < min_x or self.x > max_x:
+        if self.x < min_x and self.velocity_x < 0:
             self.velocity_x = - self.velocity_x
-        if self.y < min_y or self.y > max_y:
+        if self.x > max_x and self.velocity_x > 0:
+            self.velocity_x = - self.velocity_x
+        if self.y < min_y and self.velocity_y < 0:
+            self.velocity_y = - self.velocity_y
+        if self.y > max_y and self.velocity_y > 0:
             self.velocity_y = - self.velocity_y
 
     def check_bounds(self):
@@ -100,7 +102,25 @@ class PhysicalObject(pyglet.sprite.Sprite):
 
     def handle_collision_with(self, other_object):
         if isinstance(self, asteroid.Asteroid) and isinstance(other_object, asteroid.Asteroid):
-            self.scattering = (other_object.velocity_x, other_object.velocity_y)
+
+            x1 = (self.x, self.y)
+            x2 = (other_object.x, other_object.y)
+            v1 = (self.velocity_x, self.velocity_y)
+            v2 = (other_object.velocity_x, other_object.velocity_y)
+            m1 = self.mass
+            m2 = other_object.mass
+
+            dv1 = util.scalar_multiplication_of_vector(
+                - 2 * m2 / (m1 + m2) * util.scalar_product_of_vectors(
+                    util.subtract_vectors(v1, v2), util.subtract_vectors(x1, x2)) /
+                util.vector_magnitude_squared(util.subtract_vectors(x1, x2)),
+                util.subtract_vectors(x1, x2)
+            )
+
+            new_v1 = util.add_vectors(v1, dv1)
+
+            self.scattering = new_v1
+
         elif other_object.__class__ is not self.__class__:
             # Set to False for testing
-            self.dead = True
+            self.dead = False

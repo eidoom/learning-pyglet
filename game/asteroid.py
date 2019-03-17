@@ -20,10 +20,12 @@ class Asteroid(physicalobject.PhysicalObject):
 
         if self.dead and self.scale > parameters.min_asteroid_fraction:
             num_asteroids = random.randint(2, 3)
+            shrink_factor = 1 / num_asteroids
             for i in range(num_asteroids):
-                new_asteroid = Asteroid(x=self.x, y=self.y, batch=self.batch)
+                new_mass = self.mass * shrink_factor
+                new_asteroid = Asteroid(x=self.x, y=self.y, mass=new_mass, batch=self.batch)
                 new_asteroid.rotation = random.randint(0, 360)
                 new_asteroid.velocity_x = (random.random() * 70 + self.velocity_x)
                 new_asteroid.velocity_y = (random.random() * 70 + self.velocity_y)
-                new_asteroid.scale = self.scale * 0.5
+                new_asteroid.scale = self.scale * shrink_factor
                 self.new_objects.append(new_asteroid)
