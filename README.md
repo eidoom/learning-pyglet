@@ -16,6 +16,7 @@ This follows the [in-depth game example](https://pyglet.readthedocs.io/en/latest
 
 * Currently working on making linear momentum physical
 * Angular momentum currently unphysical (really spin since I mean rotations of asteroids)
+* Child asteroids appear to orbit one another due to elastic collisions
 * Need to calculate how to add random but momentum conserving transverse components when asteroids break apart
 * Explosive rounds need to impart more momentum into child asteroid system
 * Need to generalise code so can have random number of child asteroids created
