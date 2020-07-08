@@ -9,7 +9,7 @@ This follows the [in-depth game example](https://pyglet.readthedocs.io/en/latest
 
 ## Running
 
-* Run with `python3 play.py`
+* Run with `./play.py`
 * Control the spaceship with the keyboard WASD keys (although you can only thrust in the forward direction, so that S is redundant) and shoot with the spacebar. 
 
 ## Comments
