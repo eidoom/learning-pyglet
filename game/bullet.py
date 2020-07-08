@@ -18,7 +18,5 @@ class Bullet(physicalobject.PhysicalObject):
 
         self.is_bullet = True
 
-        print(self.radius)
-
     def die(self, dt):
         self.dead = True
