@@ -21,7 +21,7 @@ This follows the [in-depth game example](https://pyglet.readthedocs.io/en/latest
 * Explosive rounds need to impart more momentum into child asteroid system
 * Need to generalise code so can have random number of child asteroids created
 * Could add torpedoes, which start with low velocity but accelerate themselves and have more explosive power
-* Want to have player-bullet collisions for kinetic rounds, but not sure how to get around player immediately colliding with them since they're accelerating and bullet is not. Have set the initial separation larger for now, and players will have to know not to accelerate wile shooting.
+* Want to have player-bullet collisions for kinetic rounds, but not sure how to get around player immediately colliding with them since they're accelerating and bullet is not. Have set the initial separation larger for now, and players will have to know not to accelerate while shooting.
 * Haven't nailed down the parent asteroid decay yet. Want child products to start closer and move apart
 
 ## Ad
