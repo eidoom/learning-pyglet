@@ -30,9 +30,9 @@ def asteroids(num_asteroids, player_position, batch=None):
     border_block_radius = 0 if parameters.classic else asteroid_block_radius // 2
     asteroids_list = []
     for i in range(num_asteroids):
-        asteroid_x, asteroid_y = player_position
-        while util.distance((asteroid_x, asteroid_y), player_position) < player_block_radius or \
-                any([util.distance((asteroid_x, asteroid_y), old_asteroid.position) < asteroid_block_radius
+        asteroid_x, asteroid_y, _ = player_position
+        while util.distance((asteroid_x, asteroid_y), player_position[:2]) < player_block_radius or \
+                any([util.distance((asteroid_x, asteroid_y), old_asteroid.position[:2]) < asteroid_block_radius
                      for old_asteroid in asteroids_list]):
             asteroid_x = random.randint(border_block_radius, parameters.width - border_block_radius)
             asteroid_y = random.randint(border_block_radius, parameters.height - border_block_radius)

@@ -1,15 +1,18 @@
 # [learning-pyglet](https://github.com/eidoom/learning-pyglet)
 
-This follows the [in-depth game example](https://pyglet.readthedocs.io/en/latest/programming_guide/examplegame.html) section (with [source](https://bitbucket.org/pyglet/pyglet/src/default/examples/game/)) of the [documentation](https://pyglet.readthedocs.io/en/latest/index.html) for [`pyglet`](https://bitbucket.org/pyglet/pyglet/wiki/Home), which explains the example game [Astraea](https://bitbucket.org/pyglet/pyglet/src/default/examples/astraea/).
+This follows the [in-depth game example](https://pyglet.readthedocs.io/en/latest/programming_guide/examplegame.html) section (with [source](https://github.com/pyglet/pyglet/tree/master/examples/game)) of the [documentation](https://pyglet.readthedocs.io/en/latest/index.html) for [`pyglet`](https://pyglet.org/), which explains the example game Astraea.
 
 ## Dependencies
 
-* [`python3`](https://www.python.org/)
-* Python package [`pyglet`](https://pyglet.readthedocs.io/en/pyglet-1.3-maintenance/programming_guide/installation.html)
+* Uses
+    * [`python3`](https://www.python.org/)
+    * Python package `pyglet`
+* Dependencies managed by [`pdm`](https://pdm-project.org/latest/)
+    * Install dependencies with `pdm install`
 
 ## Running
 
-* Run with `./play.py`
+* Run with `pdm run ./play.py`
 * Control the spaceship with the keyboard WASD keys (although you can only thrust in the forward direction, so that S is redundant) and shoot with the spacebar. 
 
 ## Comments
