@@ -58,13 +58,13 @@ class PhysicalObject(pyglet.sprite.Sprite):
         max_x = parameters.width - self.radius
         max_y = parameters.height - self.radius
         if self.x < min_x and self.velocity_x < 0:
-            self.velocity_x = - self.velocity_x
+            self.velocity_x = -self.velocity_x
         if self.x > max_x and self.velocity_x > 0:
-            self.velocity_x = - self.velocity_x
+            self.velocity_x = -self.velocity_x
         if self.y < min_y and self.velocity_y < 0:
-            self.velocity_y = - self.velocity_y
+            self.velocity_y = -self.velocity_y
         if self.y > max_y and self.velocity_y > 0:
-            self.velocity_y = - self.velocity_y
+            self.velocity_y = -self.velocity_y
 
     def check_bounds(self):
         """Use the classic Asteroids screen wrapping behavior"""
@@ -110,14 +110,22 @@ class PhysicalObject(pyglet.sprite.Sprite):
         m1 = self.mass
         m2 = other_object.mass
 
-        normalisation_factor_raw = util.vector_magnitude_squared(util.subtract_vectors(x1, x2))
-        normalisation_factor = normalisation_factor_raw if normalisation_factor_raw > 1 else 1
+        normalisation_factor_raw = util.vector_magnitude_squared(
+            util.subtract_vectors(x1, x2)
+        )
+        normalisation_factor = (
+            normalisation_factor_raw if normalisation_factor_raw > 1 else 1
+        )
 
         dv1 = util.scalar_multiplication_of_vector(
-            - 2 * m2 / (m1 + m2) * util.scalar_product_of_vectors(
-                util.subtract_vectors(v1, v2), util.subtract_vectors(x1, x2)) /
-            normalisation_factor,
-            util.subtract_vectors(x1, x2)
+            -2
+            * m2
+            / (m1 + m2)
+            * util.scalar_product_of_vectors(
+                util.subtract_vectors(v1, v2), util.subtract_vectors(x1, x2)
+            )
+            / normalisation_factor,
+            util.subtract_vectors(x1, x2),
         )
 
         new_v1 = util.add_vectors(v1, dv1)

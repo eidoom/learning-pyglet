@@ -20,7 +20,7 @@ def distance(point_1=(0, 0), point_2=(0, 0)):
 
 
 def vector_magnitude_squared(vector):
-    return sum(x ** 2 for x in vector)
+    return sum(x**2 for x in vector)
 
 
 # def vector_magnitude(vector):
@@ -57,6 +57,7 @@ def scalar_multiplication_of_vector(scalar, vector):
 
 # def rotate_vector_by_angle(vector, angle):
 #     return matrix_times_vector(rotation_matrix(angle), vector)
+
 
 def average(*numbers):
     return sum(numbers) / len(numbers)

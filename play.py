@@ -16,12 +16,19 @@ num_asteroids = parameters.init_num_asteroids
 
 # Set up the two top labels
 score_label = pyglet.text.Label(
-    text=f"Score: {score}", x=parameters.margin, y=parameters.reduced_height, batch=main_batch,
-    font_size=parameters.std_text_size
+    text=f"Score: {score}",
+    x=parameters.margin,
+    y=parameters.reduced_height,
+    batch=main_batch,
+    font_size=parameters.std_text_size,
 )
 level_label = pyglet.text.Label(
-    text=f"Level: {level}", x=parameters.half_width, y=parameters.reduced_height, anchor_x='center', batch=main_batch,
-    font_size=parameters.std_text_size
+    text=f"Level: {level}",
+    x=parameters.half_width,
+    y=parameters.reduced_height,
+    anchor_x="center",
+    batch=main_batch,
+    font_size=parameters.std_text_size,
 )
 
 # We need to pop off as many event stack frames as we pushed on
@@ -38,7 +45,9 @@ def reset_level(num_lives=parameters.num_lives):
         event_stack_size -= 1
 
     # Initialize the player sprite
-    player_ship = player.Player(x=parameters.half_width, y=parameters.half_height, batch=main_batch)
+    player_ship = player.Player(
+        x=parameters.half_width, y=parameters.half_height, batch=main_batch
+    )
 
     # Make a number of sprites to represent remaining lives
     player_lives = load.player_lives(num_lives, batch=main_batch)
@@ -130,13 +139,20 @@ def update(dt):
         else:
             if not game_over:
                 pyglet.text.Label(
-                    text="GAME OVER", x=parameters.half_width, y=parameters.half_height, anchor_x='center',
-                    batch=main_batch, font_size=4 * parameters.std_text_size
+                    text="GAME OVER",
+                    x=parameters.half_width,
+                    y=parameters.half_height,
+                    anchor_x="center",
+                    batch=main_batch,
+                    font_size=4 * parameters.std_text_size,
                 )
                 pyglet.text.Label(
-                    text=f"Score: {score}", x=parameters.half_width,
-                    y=parameters.half_height - 4 * parameters.std_text_size, anchor_x='center', batch=main_batch,
-                    font_size=2 * parameters.std_text_size
+                    text=f"Score: {score}",
+                    x=parameters.half_width,
+                    y=parameters.half_height - 4 * parameters.std_text_size,
+                    anchor_x="center",
+                    batch=main_batch,
+                    font_size=2 * parameters.std_text_size,
                 )
                 game_over = True
             reset_level(0)

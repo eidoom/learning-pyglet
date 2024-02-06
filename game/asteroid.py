@@ -19,7 +19,11 @@ class Asteroid(physicalobject.PhysicalObject):
     def handle_collision_with(self, other_object):
         super().handle_collision_with(other_object)
 
-        if self.dead and self.scale > parameters.min_asteroid_fraction and isinstance(other_object, bullet.Bullet):
+        if (
+            self.dead
+            and self.scale > parameters.min_asteroid_fraction
+            and isinstance(other_object, bullet.Bullet)
+        ):
             vx, vy = self.scattering
             # num_asteroids = randint(2, 3)
             num_asteroids = 2

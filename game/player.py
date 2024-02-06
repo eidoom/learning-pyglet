@@ -24,7 +24,9 @@ class Player(physicalobject.PhysicalObject):
         self.event_handlers = [self, self.key_handler]
 
         # Create a child sprite to show when the ship is thrusting
-        self.engine_sprite = pyglet.sprite.Sprite(img=resources.engine_image, *args, **kwargs)
+        self.engine_sprite = pyglet.sprite.Sprite(
+            img=resources.engine_image, *args, **kwargs
+        )
         self.engine_sprite.visible = False
 
         self.reacts_to_bullets = True
@@ -40,7 +42,10 @@ class Player(physicalobject.PhysicalObject):
             "rotate_left": "A",
             "rotate_right": "D",
         }
-        control = {key: getattr(pyglet.window.key, controls_raw[key]) for key in controls_raw.keys()}
+        control = {
+            key: getattr(pyglet.window.key, controls_raw[key])
+            for key in controls_raw.keys()
+        }
 
         if self.key_handler[control["rotate_left"]]:
             self.rotation -= self.rotate_speed * dt
